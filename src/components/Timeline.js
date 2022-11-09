@@ -4,7 +4,6 @@ export const StyledTimeline = styled.div`
   flex: 1;
   width: 100%;
   overflow: hidden;
-  background-color: #F9F9F9;
   h2 {
     font-size: 16px;
     margin-bottom: 16px;
