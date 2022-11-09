@@ -1,12 +1,13 @@
+import React from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
-import Menu from "../src/components/Menu";
+import Menu from "../src/components/Menu/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
+import { Favorites } from "../src/components/Favorites";
 
 function HomePage() {
-
-    //   console.log(config.playlists);
+  const [valorDoFiltro, setValorDoFiltro] = React.useState("");
 
   return (
     <>
@@ -15,22 +16,18 @@ function HomePage() {
                 display: "flex",
                 flexDirection: "column",
                 flex: 1,
-                // backgroundColor: "red",
             }}
         >
-        <Menu />
+        <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro}/>
         <Header />
-        <Timeline playlists={config.playlists} />
+        <Timeline searchValue={valorDoFiltro} playlists={config.playlists} />
+        <Favorites channelList={config.favorites} />
         </div>
     </>
   );
 }
 
 export default HomePage;
-
-// function Menu() {
-//   return <div>Menu</div>;
-// }
 
 const StyledHeader = styled.div`
   img {
@@ -41,17 +38,24 @@ const StyledHeader = styled.div`
   .user-info {
     display: flex;
     align-items: center;
-    margin-top: 50px;
     width: 100%;
     padding: 16px 32px;
     gap: 16px;
   }
 `;
 
+const StyledBanner = styled.div`
+    background-color: blue;
+    background-image: url(${({ bg }) => bg});
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 230px;
+`;
+
 function Header() {
   return (
     <StyledHeader>
-      {/* <img src=""/> */}
+      <StyledBanner bg={config.bg}/>
       <section className="user-info">
         <img src={`https://github.com/${config.github}.png`} />
         <div>
@@ -62,7 +66,7 @@ function Header() {
     </StyledHeader>
   );
 }
-function Timeline(props) {
+function Timeline({searchValue, ...props}) {
   const playlistNames = Object.keys(props.playlists);
 
   return (
@@ -73,14 +77,20 @@ function Timeline(props) {
           <section key={playlistName}>
             <h2>{playlistName}</h2>
             <div>
-              {videos.map((video) => {
-                return(
-                    <a href={video.url} key={video.thumb}>
-                        <img src={video.thumb} />
-                        <span>{video.title}</span>
-                    </a>
-                )
-              })}
+              {videos
+                .filter((video) => {
+                  const titleNormalized = video.title.toLowerCase();
+                  const searchValueNormalized = searchValue.toLowerCase();
+                  return titleNormalized.includes(searchValueNormalized)
+                }).
+                map((video) => {
+                  return(
+                      <a href={video.url} key={video.thumb}>
+                          <img src={video.thumb} />
+                          <span>{video.title}</span>
+                      </a>
+                  )
+                })}
             </div>
           </section>
         );

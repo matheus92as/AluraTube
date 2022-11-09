@@ -1,7 +1,22 @@
 {
     "name": "Matheus Souza",
     "description": "Front-end Developer",
+    "bg": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
     "github": "matheus92as",
+    "favorites": {
+      "AluraTubes": [
+        {
+          "name": "Alanzoka",
+          "avatarUrl": "https://yt3.ggpht.com/ytc/AMLnZu8ols4v6xJtNosUSC8Ebj2qgK_qDC7pLzB5UYg3=s88-c-k-c0x00ffffff-no-rj",
+          "url": "https://www.youtube.com/c/LivesAlanzoka"
+        },
+        {
+          "name": "Mr. Kupim",
+          "avatarUrl": "https://yt3.ggpht.com/lR9vr1yotElb5z6LCIKOAfg8VfGO5Yrn6ujwPuybsemqGrnY9LuETlx0Nrn6Raa9lE3h-V9y_Q=s88-c-k-c0x00ffffff-no-rj-mo",
+          "url": "https://www.youtube.com/channel/UCc-u1GIDLL9A2kCh4r8ExVw"
+        }
+      ]
+    },
     "playlists": {
       "jogos": [
           {

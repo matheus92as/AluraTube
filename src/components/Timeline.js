@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const StyledTimeline = styled.div`
   flex: 1;
   width: 100%;
-  padding: 16px;
   overflow: hidden;
+  background-color: #F9F9F9;
   h2 {
     font-size: 16px;
     margin-bottom: 16px;
@@ -22,6 +22,7 @@ export const StyledTimeline = styled.div`
     width: 100%;
     padding: 0;
     overflow: hidden;
+    margin-left: 16px;
     padding: 16px;
     div {
       
