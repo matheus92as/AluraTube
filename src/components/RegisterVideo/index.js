@@ -1,5 +1,6 @@
 import React from "react";
 import { StyledRegisterVideo } from "./styles";
+import { createClient } from "@supabase/supabase-js";
 
 // Whiteboarding
 // Custom Hook
@@ -9,7 +10,7 @@ function useForm(propsDoForm) {
     return {
         values,
         handleChange: (evento) => {
-            console.log(evento.target);
+            // console.log(evento.target);
             const value = evento.target.value;
             const name = evento.target.name
             setValues({
@@ -23,11 +24,20 @@ function useForm(propsDoForm) {
     };
 }
 
+const PROJECT_URL = "https://qkkyhcnsruyygowaowqq.supabase.co";
+const PUBLIC_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFra3loY25zcnV5eWdvd2Fvd3FxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjgzNTc1NzIsImV4cCI6MTk4MzkzMzU3Mn0.NlwWKPVzK8SyKHR6fbNxuXZnCHW3QlqhdAKQLLK81t8";
+const supabase = createClient(PROJECT_URL, PUBLIC_KEY);
+
+// get youtube thumbnail from video url
+function getThumbnail(url) {
+    return `https://img.youtube.com/vi/${url.split("v=")[1]}/hqdefault.jpg`;
+}
+
 export default function RegisterVideo() {
     const formCadastro = useForm({
-        initialValues: { titulo: "Frost punk", url: "https://youtube.." }
+        initialValues: { titulo: "Frost punk", url: "https://www.youtube.com/watch?v=QsqatJxAUtk" }
     });
-    const [formVisivel, setFormVisivel] = React.useState(true);
+    const [formVisivel, setFormVisivel] = React.useState(false);
     /*
     ## O que precisamos para o form funcionar?
     - pegar os dados, que precisam vir do state
@@ -49,6 +59,20 @@ export default function RegisterVideo() {
                     <form onSubmit={(evento) => {
                         evento.preventDefault();
                         console.log(formCadastro.values);
+                        
+                         // Contrato entre o nosso Front e o BackEnd
+                         supabase.from("videos").insert({
+                            title: formCadastro.values.titulo,
+                            url: formCadastro.values.url,
+                            thumb: getThumbnail(formCadastro.values.url),
+                            playlist: "jogos",
+                         })
+                         .then((oqueveio) => {
+                            console.log(oqueveio);
+                         })
+                         .catch((err) => {
+                            console.log(err);
+                         })
 
                         setFormVisivel(false);
                         formCadastro.clearForm();
